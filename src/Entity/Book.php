@@ -6,9 +6,15 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\SerializedName;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *    normalizationContext={"groups"={"book:read"}},
+ *    denormalizationContext={"groups"={"book:write"}}
+ * )
  * @ORM\Entity(repositoryClass="App\Repository\BookRepository")
  */
 class Book
@@ -22,6 +28,8 @@ class Book
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"book:read"})
+     * @Assert\NotBlank()
      */
     private $name;
 
@@ -32,6 +40,7 @@ class Book
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Author", inversedBy="books")
+     * @Groups({"book:read"})
      */
     private $authors;
 
