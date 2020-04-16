@@ -23,12 +23,13 @@ class Book
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"book:read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"book:read"})
+     * @Groups({"book:read", "book:write"})
      * @Assert\NotBlank()
      */
     private $name;
@@ -39,8 +40,9 @@ class Book
     private $isbn;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Author", inversedBy="books")
-     * @Groups({"book:read"})
+     * @ORM\ManyToMany(targetEntity="App\Entity\Author", inversedBy="books", cascade={"persist"})
+     * @Groups({"book:read", "book:write"})
+     * @Assert\Valid()
      */
     private $authors;
 

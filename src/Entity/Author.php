@@ -21,12 +21,13 @@ class Author
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"author:read", "book:read" })
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"author:read", "book:read"})
+     * @Groups({"author:read", "author:write", "book:read", "book:write"})
      */
     private $name;
 
