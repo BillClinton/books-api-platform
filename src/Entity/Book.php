@@ -12,6 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ApiResource(
+ *    iri="http://schema.org/Book",
  *    normalizationContext={"groups"={"book:read"}},
  *    denormalizationContext={"groups"={"book:write"}}
  * )
