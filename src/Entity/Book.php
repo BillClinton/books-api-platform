@@ -50,6 +50,7 @@ class Book
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="books")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"book:read", "book:write"})
      */
     private $owner;
 
