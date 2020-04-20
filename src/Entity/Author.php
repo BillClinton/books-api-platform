@@ -41,6 +41,14 @@ class Author
         $this->books = new ArrayCollection();
     }
 
+    /**
+     * @Groups({"author:read", "book:read" })
+     */
+    public function getIri(): string
+    {
+        return "/api/author/".$this->getId();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
