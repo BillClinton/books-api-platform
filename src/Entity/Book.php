@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -16,6 +18,9 @@ use Symfony\Component\Validator\Constraints as Assert;
  *    normalizationContext={"groups"={"book:read"}},
  *    denormalizationContext={"groups"={"book:write"}}
  * )
+ * @ApiFilter(SearchFilter::class, properties={
+ *     "owner": "exact"
+ * })
  * @ORM\Entity(repositoryClass="App\Repository\BookRepository")
  */
 class Book
