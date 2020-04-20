@@ -2,16 +2,26 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
+ * @ApiResource(
+ *    normalizationContext={"groups"={"user:read"}},
+ *    denormalizationContext={"groups"={"user:write"}},
+ * )
+ * @UniqueEntity(fields={"username"})
+ * @UniqueEntity(fields={"email"})
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  */
 class User implements UserInterface
 {
     /**
      * @ORM\Id()
+     * @Groups({"user:read"})
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
@@ -19,6 +29,8 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Groups({"user:read", "user:write"})
+     * @Assert\NotBlank()
      */
     private $username;
 
@@ -30,11 +42,16 @@ class User implements UserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
+     * @Groups({"user:write"})
+     * @Assert\NotBlank()
      */
     private $password;
 
     /**
      * @ORM\Column(type="string", length=255, unique=true)
+     * @Groups({"user:read", "user:write"})
+     * @Assert\NotBlank()
+     * @Assert\Email()
      */
     private $email;
 
