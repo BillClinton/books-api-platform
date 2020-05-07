@@ -9,21 +9,22 @@ security:
         app_user_provider:
             entity:
                 class: App\Entity\User
-                property: username
+                property: email
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
-            anonymous: lazy
-            provider: app_user_provider
-            guard:
-                authenticators:
-                    - App\Security\LoginFormAuthenticator
+            anonymous: true
+
+            json_login:
+                check_path: app_login
+                username_path: email
+                password_path: password
+
             logout:
                 path: app_logout
-                # where to redirect after logout
-                # target: app_any_route
+                target: app_loggedout
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication

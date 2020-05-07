@@ -3,34 +3,56 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use ApiPlatform\Core\Api\IriConverterInterface;
+use Psr\Log\LoggerInterface;
 
 class SecurityController extends AbstractController
 {
-    /**
-     * @Route("/login", name="app_login")
-     */
-    public function login(AuthenticationUtils $authenticationUtils): Response
-    {
-        // if ($this->getUser()) {
-        //     return $this->redirectToRoute('target_path');
-        // }
-
-        // get the login error if there is one
-        $error = $authenticationUtils->getLastAuthenticationError();
-        // last username entered by the user
-        $lastUsername = $authenticationUtils->getLastUsername();
-
-        return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
+  /**
+   * @Route("/login", name="app_login", methods={"POST"})
+   */
+  public function login(IriConverterInterface $iriConverter, LoggerInterface $logger)
+  {
+    if (!$this->isGranted('IS_AUTHENTICATED_FULLY')) {
+      return $this->json([
+        'error' => 'Invalid login request: check that the Content-Type header is "application/json".'
+      ], 400);
     }
 
-    /**
-     * @Route("/logout", name="app_logout")
-     */
-    public function logout()
-    {
-        throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
-    }
+
+    $logger->info('user logged in: ' . $iriConverter->getIriFromItem($this->getUser()));
+
+    return $this->json($this->getUser(), 200, [
+      'Location' => $iriConverter->getIriFromItem($this->getUser())
+    ]);
+  }
+
+  /**
+   * @Route("/logout", name="app_logout")
+   */
+  public function me(IriConverterInterface $iriConverter)
+  {
+    $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+    return $this->json($this->getUser(), 200, [
+      'Location' => $iriConverter->getIriFromItem($this->getUser())
+    ]);
+  }
+
+  /**
+   * @Route("/logout", name="app_logout", methods={"GET"})
+   */
+  public function logout()
+  {
+    throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
+  }
+
+  /**
+   * @Route("/loggedout", name="app_loggedout", methods={"GET"})
+   */
+  public function loggedout()
+  {
+    return $this->json(['success' => true]);
+  }
 }
