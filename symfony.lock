@@ -118,6 +118,9 @@
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
     },
+    "monolog/monolog": {
+        "version": "2.0.2"
+    },
     "myclabs/deep-copy": {
         "version": "1.9.5"
     },
@@ -287,6 +290,12 @@
             "src/Kernel.php"
         ]
     },
+    "symfony/http-client": {
+        "version": "v5.0.8"
+    },
+    "symfony/http-client-contracts": {
+        "version": "v2.0.1"
+    },
     "symfony/http-foundation": {
         "version": "v5.0.7"
     },
@@ -307,6 +316,23 @@
     },
     "symfony/mime": {
         "version": "v5.0.7"
+    },
+    "symfony/monolog-bridge": {
+        "version": "v5.0.8"
+    },
+    "symfony/monolog-bundle": {
+        "version": "3.3",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "3.3",
+            "ref": "a89f4cd8a232563707418eea6c2da36acd36a917"
+        },
+        "files": [
+            "config/packages/dev/monolog.yaml",
+            "config/packages/prod/monolog.yaml",
+            "config/packages/test/monolog.yaml"
+        ]
     },
     "symfony/phpunit-bridge": {
         "version": "4.3",
