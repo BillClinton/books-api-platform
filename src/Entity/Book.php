@@ -18,7 +18,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *      "get"={
  *        "normalization_context"={"groups"={"book:read", "book:item:get"}},
  *      },
- *      "put"={
+ *      "patch"={
  *        "security"="is_granted('EDIT', object)",
  *        "security_message"="Only the creator can edit an book"
  *      },

@@ -14,7 +14,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *      "get"={
  *        "normalization_context"={"groups"={"author:read", "author:item:get"}},
  *      },
- *      "put"={
+ *      "patch"={
  *        "security"="is_granted('EDIT', object)",
  *        "security_message"="Only the creator can edit an author"
  *      },
@@ -25,7 +25,11 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *      "post"={"security"="is_granted('ROLE_USER')"}
  *    },
  *    normalizationContext={"groups"={"author:read"}},
- *    denormalizationContext={"groups"={"author:write"}}
+ *    denormalizationContext={"groups"={"author:write"}},
+ *    attributes={
+ *      "pagination_items_per_page"=10,
+ *      "formats"={"jsonld", "json" }
+ *    }
  * )
  * @ORM\Entity(repositoryClass="App\Repository\AuthorRepository")
  * @ORM\EntityListeners({"App\Doctrine\AuthorSetOwnerListener"})
