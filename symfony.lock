@@ -118,6 +118,9 @@
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
     },
+    "justinrainbow/json-schema": {
+        "version": "5.2.9"
+    },
     "monolog/monolog": {
         "version": "2.0.2"
     },
@@ -226,7 +229,7 @@
         ]
     },
     "symfony/css-selector": {
-        "version": "v5.0.7"
+        "version": "v5.0.8"
     },
     "symfony/dependency-injection": {
         "version": "v5.0.7"
