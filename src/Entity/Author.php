@@ -15,7 +15,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *        "normalization_context"={"groups"={"author:read", "author:item:get"}},
  *      },
  *      "put"={
- *        "security"="is_granted('ROLE_USER') and object.getOwner() == user",
+ *        "security"="is_granted('EDIT', object)",
  *        "security_message"="Only the creator can edit an author"
  *      },
  *      "delete"={"security"="is_granted('ROLE_ADMIN')"}
@@ -28,6 +28,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *    denormalizationContext={"groups"={"author:write"}}
  * )
  * @ORM\Entity(repositoryClass="App\Repository\AuthorRepository")
+ * @ORM\EntityListeners({"App\Doctrine\AuthorSetOwnerListener"})
  */
 class Author
 {
@@ -53,6 +54,7 @@ class Author
   /**
    * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="authors")
    * @ORM\JoinColumn(nullable=false)
+   * @Groups({"author:read", "author:collection:post"})
    */
   private $owner;
 
