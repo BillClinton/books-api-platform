@@ -73,6 +73,12 @@ class Book
    */
   private $owner;
 
+  /**
+   * @ORM\Column(type="boolean")
+   * @Groups({"book:read", "book:write"})
+   */
+  private $isPublished;
+
   public function __construct()
   {
     $this->authors = new ArrayCollection();
@@ -141,6 +147,18 @@ class Book
   public function setOwner(?User $owner): self
   {
     $this->owner = $owner;
+
+    return $this;
+  }
+
+  public function getIsPublished(): ?bool
+  {
+    return $this->isPublished;
+  }
+
+  public function setIsPublished(bool $isPublished): self
+  {
+    $this->isPublished = $isPublished;
 
     return $this;
   }
