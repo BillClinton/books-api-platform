@@ -29,7 +29,7 @@ class SecurityController extends AbstractController
   }
 
   /**
-   * @Route("/logout", name="app_logout")
+   * @Route("/me", name="user_profile")
    */
   public function me(IriConverterInterface $iriConverter)
   {
