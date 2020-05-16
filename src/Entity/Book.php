@@ -77,7 +77,13 @@ class Book
    * @ORM\Column(type="boolean")
    * @Groups({"book:read", "book:write"})
    */
-  private $isPublished;
+  private $isPublished = true;
+
+  /**
+   * @ORM\Column(type="integer", nullable=true)
+   * @Groups({"book:read", "book:write"})
+   */
+  private $rating;
 
   public function __construct()
   {
@@ -159,6 +165,18 @@ class Book
   public function setIsPublished(bool $isPublished): self
   {
     $this->isPublished = $isPublished;
+
+    return $this;
+  }
+
+  public function getRating(): ?int
+  {
+    return $this->rating;
+  }
+
+  public function setRating(?int $rating): self
+  {
+    $this->rating = $rating;
 
     return $this;
   }
