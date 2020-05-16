@@ -18,7 +18,10 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *        "security"="is_granted('EDIT', object)",
  *        "security_message"="Only the creator can edit an author"
  *      },
- *      "delete"={"security"="is_granted('ROLE_ADMIN')"}
+ *      "delete"={
+ *        "security"="is_granted('EDIT', object)",
+ *        "security_message"="Only the creator can delete an author"
+ *      },
  *    },
  *    collectionOperations={
  *      "get",
